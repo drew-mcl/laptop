@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+set -euo
+set -o pipefail 2>/dev/null || true
+
+SCRIPT_DIR="$(cd "$(dirname "${0}")" && pwd)"
+HOOK_SCRIPT="${SCRIPT_DIR}/pre-commit.sh"
+
+if [[ -x "$HOOK_SCRIPT" ]]; then
+  exec "$HOOK_SCRIPT" "$@"
+fi
+
+echo "[pre-commit] Hook script not found at $HOOK_SCRIPT" >&2
+exit 0

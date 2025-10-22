@@ -1,0 +1,4 @@
+# Installed automatically for each new Ruby managed by mise/asdf.
+bundler
+rubocop
+solargraph

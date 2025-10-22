@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ -z "${OUT_DIR:-}" ]]; then
+  OUT_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/git-cliff/completions"
+fi
+
+mkdir -p "$OUT_DIR"
+export OUT_DIR
+
+_try_exec() {
+  local candidate=$1
+  shift || true
+  [[ -n $candidate ]] || return 1
+  [[ "$candidate" == "$0" ]] && return 1
+  [[ -x "$candidate" ]] || return 1
+  exec "$candidate" "$@"
+}
+
+if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
+  _try_exec "${HOMEBREW_PREFIX}/bin/git-cliff-completions" "$@"
+  _try_exec "${HOMEBREW_PREFIX}/opt/git-cliff/bin/git-cliff-completions" "$@"
+elif command -v brew >/dev/null 2>&1; then
+  brew_prefix=$(brew --prefix 2>/dev/null || true)
+  if [[ -n "$brew_prefix" ]]; then
+    _try_exec "${brew_prefix}/bin/git-cliff-completions" "$@"
+    _try_exec "${brew_prefix}/opt/git-cliff/bin/git-cliff-completions" "$@"
+  fi
+fi
+
+_try_exec "/opt/homebrew/bin/git-cliff-completions" "$@"
+_try_exec "/usr/local/bin/git-cliff-completions" "$@"
+
+if command -v which >/dev/null 2>&1; then
+  while IFS= read -r path; do
+    _try_exec "$path" "$@"
+  done < <(which -a git-cliff-completions 2>/dev/null || true)
+else
+  candidate=$(command -v git-cliff-completions 2>/dev/null || true)
+  _try_exec "$candidate" "$@"
+fi
+
+echo "git-cliff-completions: underlying binary not found in PATH." >&2
+exit 127
