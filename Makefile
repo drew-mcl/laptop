@@ -2,7 +2,7 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 DOTFILES_DIR := $(CURDIR)/dotfiles
-STOW_PACKAGES := curl git glab ghostty gradle mise ruby ssh vscode zsh
+STOW_PACKAGES := curl git glab ghostty gradle mise ruby ssh vscode zsh direnv starship
 
 BREW := brew
 BREW_DIR := $(CURDIR)/brew
