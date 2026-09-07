@@ -1,9 +1,19 @@
+# GUI apps, fonts, and cask-distributed CLIs.
+tap "entireio/tap"
+
 cask "ghostty"
 cask "obsidian"
 cask "drawio"
-cask "claude-code"
+cask "docker-desktop"
+
+# AI coding agents (Claude Code uses the native installer: make claude-install)
 cask "codex"
-cask "docker"
+cask "entireio/tap/entire"   # Claude Code session checkpoints
+
+# Cloud
+cask "gcloud-cli"
+
+# Fonts
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
 cask "font-symbols-only-nerd-font"

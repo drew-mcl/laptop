@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2059  # color variables in printf format strings are intentional
 set -euo pipefail
 
 # --- Colors ------------------------------------------------------------------

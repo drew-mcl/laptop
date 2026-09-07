@@ -2,22 +2,22 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 DOTFILES_DIR := $(CURDIR)/dotfiles
-STOW_PACKAGES := curl git glab ghostty mise ruby ssh zsh direnv starship yazi atuin nvim claude lazygit
+STOW_PACKAGES := curl git gh glab ghostty mise ruby ssh zsh direnv starship yazi atuin nvim claude lazygit bottom
 
 BREW := brew
 BREW_DIR := $(CURDIR)/brew
 BREWFILE_BASE := $(BREW_DIR)/Brewfile.base
 BREWFILE_APPS := $(BREW_DIR)/Brewfile.apps
 
-# Colors (Catppuccin Macchiato palette)
+# Colors (256-color approximations of the Catppuccin Frappe palette)
 BOLD := \033[1m
 DIM := \033[2m
-BLUE := \033[38;5;117m
-GREEN := \033[38;5;114m
-PEACH := \033[38;5;209m
-MAUVE := \033[38;5;141m
-RED := \033[38;5;204m
-CYAN := \033[36m
+BLUE := \033[38;5;111m
+GREEN := \033[38;5;150m
+PEACH := \033[38;5;216m
+MAUVE := \033[38;5;183m
+RED := \033[38;5;210m
+CYAN := \033[38;5;116m
 RESET := \033[0m
 
 # Brew optimization — skip auto-update during bootstrap
@@ -25,7 +25,7 @@ export HOMEBREW_NO_AUTO_UPDATE := 1
 export HOMEBREW_NO_INSTALL_CLEANUP := 1
 export HOMEBREW_NO_ANALYTICS := 1
 
-.PHONY: help bootstrap setup-git setup-ssh install-brew brew setup-github stow stow-clean unstow oh-my-zsh dirs ssh macos custom doctor mise-install refresh git-monorepo nuke
+.PHONY: help bootstrap setup-git setup-ssh install-brew brew claude-install setup-github stow stow-clean unstow oh-my-zsh dirs macos custom doctor mise-install refresh git-monorepo nuke
 
 help: ## Show all available targets
 	@printf "\n  $(MAUVE)$(BOLD)macOS$(RESET) $(DIM)workstation targets$(RESET)\n\n"
@@ -33,7 +33,7 @@ help: ## Show all available targets
 		awk 'BEGIN {FS = ":.*?## "}; {printf "  $(CYAN)%-20s$(RESET) %s\n", $$1, $$2}'
 	@printf "\n"
 
-bootstrap: setup-git setup-ssh install-brew brew setup-github stow-clean stow oh-my-zsh mise-install macos ## Full setup from scratch
+bootstrap: setup-git setup-ssh install-brew brew claude-install setup-github dirs stow-clean oh-my-zsh mise-install macos ## Full setup from scratch
 	@printf "\n"
 	@printf "  $(GREEN)$(BOLD)Bootstrap complete!$(RESET)\n"
 	@printf "\n"
@@ -41,7 +41,7 @@ bootstrap: setup-git setup-ssh install-brew brew setup-github stow-clean stow oh
 	@printf "  $(DIM)Run $(RESET)$(BOLD)ws help$(RESET)$(DIM) to manage your workstation.$(RESET)\n"
 	@printf "\n"
 
-setup-git: ## Configure git identity and sensible defaults
+setup-git: ## Configure git identity (defaults come from the stowed .gitconfig)
 	@printf "\n$(BLUE)$(BOLD)==>$(RESET) $(BOLD)Configuring git$(RESET)\n"
 	@if [ -n "$${GIT_USER_NAME:-}" ]; then \
 		git config --global user.name "$$GIT_USER_NAME"; \
@@ -53,15 +53,6 @@ setup-git: ## Configure git identity and sensible defaults
 	elif [ -z "$$(git config --global user.email)" ]; then \
 		read -r -p "    Git user.email: " email && git config --global user.email "$$email"; \
 	fi
-	@git config --global init.defaultBranch main
-	@git config --global fetch.prune true
-	@git config --global pull.ff only
-	@git config --global rebase.autoStash true
-	@git config --global merge.conflictstyle zdiff3
-	@git config --global push.default simple
-	@git config --global push.autoSetupRemote true
-	@git config --global rerere.enabled true
-	@git config --global credential.helper osxkeychain
 	@printf "  $(GREEN)user.name  $(RESET)$$(git config --global user.name)\n"
 	@printf "  $(GREEN)user.email $(RESET)$$(git config --global user.email)\n"
 
@@ -83,9 +74,6 @@ setup-ssh: ## Generate SSH key and add to keychain
 	else \
 		printf "  $(GREEN)Exists$(RESET) ~/.ssh/id_ed25519\n"; \
 	fi
-	@git config --global gpg.format ssh
-	@git config --global user.signingkey "$$HOME/.ssh/id_ed25519.pub"
-	@git config --global commit.gpgsign true
 
 install-brew: ## Install Homebrew if not present
 	@printf "\n$(BLUE)$(BOLD)==>$(RESET) $(BOLD)Homebrew$(RESET)\n"
@@ -115,6 +103,16 @@ brew: ## Install all Homebrew packages
 		"$$($(BREW) --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc --no-bash --no-fish >/dev/null 2>&1; \
 	fi
 	@printf "  $(GREEN)All packages installed$(RESET)\n"
+
+claude-install: ## Install Claude Code via the native installer (self-updating)
+	@printf "\n$(BLUE)$(BOLD)==>$(RESET) $(BOLD)Claude Code$(RESET)\n"
+	@if command -v claude >/dev/null 2>&1; then \
+		printf "  $(GREEN)Already installed$(RESET) $$(claude --version 2>/dev/null | head -1)\n"; \
+	else \
+		printf "  $(PEACH)Installing...$(RESET)\n"; \
+		curl -fsSL https://claude.ai/install.sh | bash; \
+		printf "  $(GREEN)Installed$(RESET) to ~/.local/bin/claude\n"; \
+	fi
 
 setup-github: ## Authenticate with GitHub and upload SSH key
 	@printf "\n$(BLUE)$(BOLD)==>$(RESET) $(BOLD)GitHub setup$(RESET)\n"
@@ -146,9 +144,9 @@ stow: ## Symlink all dotfiles to $HOME
 		printf "  $(DIM)%s$(RESET)\n" $$pkg; \
 		stow --no-folding --restow -d $(DOTFILES_DIR) -t $$HOME $$pkg; \
 	done
-	@if command -v ya >/dev/null 2>&1 && ya pack --help >/dev/null 2>&1; then \
+	@if command -v ya >/dev/null 2>&1; then \
 		printf "  $(DIM)yazi flavors$(RESET)\n"; \
-		ya pack -a yazi-rs/flavors:catppuccin-macchiato 2>/dev/null || true; \
+		ya pkg install 2>/dev/null || true; \
 	fi
 	@printf "  $(GREEN)%s packages linked$(RESET)\n" "$$(echo $(STOW_PACKAGES) | wc -w | tr -d ' ')"
 
@@ -166,7 +164,7 @@ stow-clean: ## Backup conflicts then restow
 			target="$$HOME/$$rel"; \
 			if [ -L "$$target" ]; then \
 				link_target=$$(readlink "$$target"); \
-				case "$$link_target" in "$(DOTFILES_DIR)"/*) continue ;; esac; \
+				case "$$link_target" in "$(DOTFILES_DIR)"/*|*/repos/macos/dotfiles/*) continue ;; esac; \
 			fi; \
 			if [ -e "$$target" ] || [ -L "$$target" ]; then \
 				dest="$$backup_dir/$$rel"; \
@@ -176,8 +174,9 @@ stow-clean: ## Backup conflicts then restow
 				printf "  $(PEACH)backed up$(RESET) $$rel\n"; \
 			fi; \
 		done < <(cd $(DOTFILES_DIR)/$$pkg && find . -mindepth 1 \( -type f -o -type l \) -print0); \
-		stow --no-folding --restow -d $(DOTFILES_DIR) -t $$HOME $$pkg; \
-	done
+	done; \
+	rmdir "$$backup_dir" 2>/dev/null || printf "  $(DIM)backups in $$backup_dir$(RESET)\n"
+	@$(MAKE) stow
 
 unstow: ## Remove symlinks for all stow packages
 	@printf "\n$(BLUE)$(BOLD)==>$(RESET) $(BOLD)Removing symlinks$(RESET)\n"
@@ -194,9 +193,6 @@ oh-my-zsh: ## Install oh-my-zsh
 
 dirs: ## Create dev directories
 	@bash ./scripts/dirs.sh
-
-ssh: ## Setup SSH key and agent
-	@bash ./scripts/ssh-setup.sh
 
 macos: ## Apply macOS defaults
 	@printf "\n$(BLUE)$(BOLD)==>$(RESET) $(BOLD)Applying macOS defaults$(RESET)\n"
@@ -222,7 +218,7 @@ mise-install: ## Install language runtimes from mise config
 
 doctor: ## Print environment diagnostics
 	@printf "\n  $(MAUVE)$(BOLD)Doctor$(RESET)\n\n"
-	@for tool in brew git stow zsh mise node python3 ruby go rustc nvim gh glab; do \
+	@for tool in brew git stow zsh starship atuin fzf bat delta yazi nvim mise node python3 ruby go rustc gh glab claude; do \
 		if command -v $$tool >/dev/null 2>&1; then \
 			ver=$$($$tool --version 2>/dev/null | head -1 || echo "ok"); \
 			printf "  $(GREEN)%-12s$(RESET) %s\n" "$$tool" "$$ver"; \

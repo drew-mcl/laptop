@@ -30,16 +30,17 @@ The bootstrap runs these targets in order:
 
 | Step | Target | What it does |
 |------|--------|-------------|
-| 1 | `setup-git` | Prompts for git user.name/email, sets sensible defaults |
+| 1 | `setup-git` | Prompts for git user.name/email (all other git defaults come from the stowed `.gitconfig`) |
 | 2 | `setup-ssh` | Generates ed25519 key, adds to macOS keychain |
 | 3 | `install-brew` | Installs Homebrew if not present |
 | 4 | `brew` | Installs all formulae and casks from Brewfiles |
-| 5 | `setup-github` | Authenticates with GitHub CLI and uploads SSH key |
-| 6 | `stow-clean` | Backs up conflicting dotfiles, then symlinks all packages |
-| 7 | `stow` | Re-stows all dotfile packages to `$HOME` |
-| 8 | `oh-my-zsh` | Installs oh-my-zsh framework |
-| 9 | `mise-install` | Installs language runtimes (Ruby, Node, Python, Go, Rust) |
-| 10 | `macos` | Applies macOS defaults (Finder, Dock, keyboard) with confirmation |
+| 5 | `claude-install` | Installs Claude Code via the native installer |
+| 6 | `setup-github` | Authenticates with GitHub CLI and uploads SSH key |
+| 7 | `dirs` | Creates `~/repos`, `~/repos/worktrees`, `~/.local/bin` |
+| 8 | `stow-clean` | Backs up conflicting dotfiles, then symlinks all packages and installs the yazi flavor |
+| 9 | `oh-my-zsh` | Installs oh-my-zsh framework |
+| 10 | `mise-install` | Installs language runtimes (Ruby, Node, Python, Go, Rust) |
+| 11 | `macos` | Applies macOS defaults (Finder, Dock, keyboard) with confirmation |
 
 ## Environment Variables
 
@@ -50,12 +51,12 @@ export GIT_USER_NAME="Your Name"
 export GIT_USER_EMAIL="your@email.com"
 ```
 
-Or create a `.env` file in the repo root with these values.
-
 ## After Bootstrap
 
 1. **Switch remote to SSH**: `git remote set-url origin git@github.com:drew-mcl/macos.git`
-2. **Set up Obsidian**: Open Obsidian, create vault at `~/Documents/Obsidian`
+2. **Sign in to Claude Code**: run `claude` once in `~/repos` to authenticate and accept the trust dialog, then use `clc` day to day
+3. **Set up Obsidian**: Open Obsidian, create vault at `~/Documents/Obsidian`
+4. **Check drift**: `ws doctor`
 
 ## Customization
 
