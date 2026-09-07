@@ -1,0 +1,17 @@
+# Global git ignores (git reads ~/.config/git/ignore by default)
+
+# macOS
+.DS_Store
+._*
+
+# Claude Code session worktrees and local-only settings
+.claude/worktrees/
+.claude/settings.local.json
+
+# Editors
+*.swp
+*.swo
+.idea/
+
+# direnv
+.direnv/

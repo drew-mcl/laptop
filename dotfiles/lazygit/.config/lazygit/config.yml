@@ -1,25 +1,31 @@
+# Catppuccin Frappe (pink accent)
+# https://github.com/catppuccin/lazygit
 gui:
   theme:
     activeBorderColor:
-      - "#a6da95"
+      - "#f4b8e4"
       - bold
     inactiveBorderColor:
-      - "#a5adcb"
-    optionsTextColor:
-      - "#8aadf4"
-    selectedLineBgColor:
-      - "#363a4f"
-    cherryPickedCommitFgColor:
-      - "#8aadf4"
-    cherryPickedCommitBgColor:
-      - "#494d64"
-    markedBaseCommitFgColor:
-      - "#8aadf4"
-    markedBaseCommitBgColor:
-      - "#494d64"
-    unstagedChangesColor:
-      - "#ed8796"
-    defaultFgColor:
-      - "#cad3f5"
+      - "#a5adce"
     searchingActiveBorderColor:
-      - "#eed49f"
+      - "#e5c890"
+    optionsTextColor:
+      - "#8caaee"
+    selectedLineBgColor:
+      - "#414559"
+    inactiveViewSelectedLineBgColor:
+      - "#737994"
+    cherryPickedCommitFgColor:
+      - "#f4b8e4"
+    cherryPickedCommitBgColor:
+      - "#51576d"
+    markedBaseCommitFgColor:
+      - "#8caaee"
+    markedBaseCommitBgColor:
+      - "#e5c890"
+    unstagedChangesColor:
+      - "#e78284"
+    defaultFgColor:
+      - "#c6d0f5"
+  authorColors:
+    "*": "#babbf1"
