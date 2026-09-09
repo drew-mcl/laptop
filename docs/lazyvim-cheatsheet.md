@@ -12,11 +12,11 @@ The leader key is `<Space>`. Most commands start with it.
 
 | Keybinding | Action |
 |------------|--------|
-| `<leader>ff` | Find files (Telescope) |
+| `<leader>ff` | Find files (snacks picker) |
 | `<leader>fr` | Recent files |
 | `<leader>fb` | Browse buffers |
 | `<leader>fg` | Live grep (search in files) |
-| `<leader>e` | File explorer (neo-tree) |
+| `<leader>e` | File explorer (snacks explorer) |
 | `<leader><leader>` | Find buffers |
 
 ---
@@ -177,7 +177,7 @@ The leader key is `<Space>`. Most commands start with it.
 | `:Mason` | Open LSP/linter installer |
 | `:LazyExtras` | Enable/disable LazyVim extras |
 | `:checkhealth` | Diagnose issues |
-| `:Telescope keymaps` | Search all keybindings |
+| `<leader>sk` | Search all keybindings |
 
 ---
 

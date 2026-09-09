@@ -1,0 +1,44 @@
+# One tip per line. Lines starting with # are ignored. Edit with: ws tips
+clc starts Claude in a fresh worktree; clc <name> reopens or names it; clm runs in the main checkout
+clr opens the Claude resume picker and drops you back into that session's worktree
+zc <repo> jumps to a repo with zoxide and starts clc there in one go
+gco with no args opens an fzf branch picker sorted by recent commits
+gwt lists every worktree in this repo with its branch, age, and dirty file count
+ws doctor reports brew, mise, stow, and Claude Code drift in both directions
+ws claude settings edits the stowed Claude Code settings.json; ws claude status edits the status line
+aa opens an fzf alias browser and puts the chosen command on your prompt
+repo lists local, GitHub, and GitLab repos in fzf; pick one to cd or clone into ~/repos
+y opens yazi and cds to wherever you quit; gr jumps to ~/repos inside yazi
+z <dir> jumps to a frecent directory; zi opens an interactive picker
+m runs make from the nearest parent Makefile; mt picks a target with fzf
+sshx picks an SSH host from ~/.ssh/config with fzf
+ssh-host <name> generates a per-host SSH key and a config.d entry
+envim opens the nearest .env file in nvim
+lt shows a two-level tree with eza; ll is the long listing with git status
+gla shows the commit graph across all branches; gds diffs staged changes only
+gpm rebases your branch interactively onto the default branch; gpm1 squashes it to one commit
+gmco checks out an open GitLab MR via fzf; gmr creates one with --fill
+Ctrl+R searches shell history with atuin; type then press Enter to run
+Ctrl+T inserts a file path with fzf; Alt+C cds into a directory with fzf
+Type a prefix and press Right to accept the grey autosuggestion
+cat is bat: cat -A file shows non-printing characters; cat -l json forces a language
+bat --diff file shows uncommitted changes with syntax highlighting
+lazygit gives you a full git UI; press ? for keybindings
+btm is the system monitor; press e to expand a widget, / to search processes
+procs --tree shows processes as a tree; procs <name> filters by name
+dust shows disk usage as a tree; dust -d 2 limits depth
+xh :3000/api sends a request to localhost:3000; xh -f posts form data
+hyperfine 'cmd a' 'cmd b' benchmarks two commands against each other
+tokei prints lines of code by language for the current tree
+tldr <cmd> shows practical examples for any command
+In Claude Code, /loop 5m <cmd> reruns a command every five minutes
+In Claude Code, /code-review reviews the current diff; /simplify cleans up recently changed code
+In Claude Code, Ctrl+] reopens the most recent artifact from this session
+In Claude Code, /fast toggles fast mode; /config changes model and theme
+In Claude Code, --from-pr <n> resumes the session linked to a pull request
+Add .worktreeinclude with .env patterns to copy secrets into every Claude worktree automatically
+mise use node@22 pins a runtime for the current directory; mise ls shows what is active
+direnv allow trusts the .envrc in the current directory
+keychain-set NAME value stores a secret in macOS Keychain; keychain-list shows what is loaded
+obsidian-sync commits and pushes your Obsidian vault
+ws profile shows shell startup time and the slowest init functions

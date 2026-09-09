@@ -1,0 +1,17 @@
+# GitHub CLI config (auth lives in hosts.yml, which is not stowed)
+version: 1
+git_protocol: ssh
+editor:
+prompt: enabled
+prefer_editor_prompt: disabled
+pager:
+aliases:
+    co: pr checkout
+    prs: pr list --author @me
+    wt: pr checkout --detach
+http_unix_socket:
+browser:
+color_labels: enabled
+accessible_colors: disabled
+accessible_prompter: disabled
+spinner: enabled

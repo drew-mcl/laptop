@@ -14,3 +14,7 @@ __pycache__/
 *.log
 vendor/
 
+
+# yazi packages installed by ya pkg (package.toml is the source of truth)
+dotfiles/yazi/.config/yazi/flavors/
+dotfiles/yazi/.config/yazi/plugins/

@@ -81,5 +81,6 @@ export VISUAL=nvim
 export MACOS_SETUP="$HOME/repos/macos"
 export OBSIDIAN_VAULT="$HOME/Documents/Obsidian"
 
-# --- Claude Code Configuration ------------------------------------------------
+# --- Claude Code --------------------------------------------------------------
 export CLAUDE_CODE_ENABLE_TASKS=true
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1

@@ -1,50 +1,83 @@
-brew "git-delta"
-brew "git-cliff"
+# Core CLI tools. GUI apps and fonts live in Brewfile.apps.
+tap "entireio/tap"
+tap "mobile-dev-inc/tap"
+tap "revylai/tap"
+tap "supabase/tap"
+
+# Shell & prompt
 brew "stow"
-brew "jq"
-brew "ripgrep"
-brew "fd"
-brew "fzf"
-brew "direnv"
-brew "gh"
-brew "glab"
-brew "watchman"
-brew "coreutils"
-brew "wget"
-brew "eza"
-brew "bat"
-brew "tree"
+brew "starship"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
-brew "ansible"
-brew "dockutil"
+brew "atuin"             # Shell history (Ctrl+R)
+brew "zoxide"            # Smarter cd
+brew "fzf"
+brew "fastfetch"         # System info
+brew "coreutils"
+brew "wget"
+
+# Git & version control
+brew "git-delta"
+brew "git-cliff"
+brew "gh"
+brew "glab"
+brew "lazygit"
+
+# Search, files, viewing
+brew "ripgrep"
+brew "fd"
+brew "bat"
+brew "eza"
+brew "tree"
+brew "yazi"              # Terminal file manager
+brew "neovim"
+brew "jq"
+
+# System monitoring
+brew "bottom"            # btm: better top
+brew "procs"             # Better ps
+brew "dust"              # Better du
+
+# Dev tooling
+brew "mise"              # Runtime version manager
+brew "direnv"
+brew "watchman"
+brew "tlrc"              # tldr client
+brew "hyperfine"         # CLI benchmarking
+brew "tokei"             # Code statistics
+brew "httpie"
+brew "xh"
+brew "actionlint"        # GitHub Actions linter
+brew "shellcheck"
+brew "exiftool"
+brew "cliclick"          # Scriptable mouse/keyboard for macOS
+
+# JS toolchain helpers (node itself comes from mise)
+brew "yarn"
+brew "nx"
+
+# Mobile / App Store
+brew "cocoapods"
+brew "asc"                          # App Store Connect CLI
+brew "revylai/tap/greenlight"       # App Store / Play pre-submission scanner
+brew "mobile-dev-inc/tap/maestro"   # Mobile E2E testing
+
+# Cloud & infra
 brew "kubernetes-cli"
 brew "helm"
+brew "terraform"
+brew "ansible"
+brew "lazydocker"
+brew "supabase/tap/supabase"
+brew "dockutil"
+
+# AI coding agents (Claude Code uses the native installer: make claude-install)
+brew "gemini-cli"
+
+# Build deps for mise-compiled runtimes (ruby, python)
 brew "openssl@3"
 brew "libyaml"
 brew "gmp"
-brew "pkg-config"
+brew "pkgconf"
 brew "readline"
 brew "libffi"
-brew "mise"
-brew "starship"
-brew "lazygit"
-
-# Modern CLI tools
-brew "yazi"              # Terminal file manager
-brew "zoxide"            # Smarter cd command
-brew "atuin"             # Shell history with sync
-brew "neovim"            # Modern vim
-brew "fastfetch"         # System info
-
-# Additional dev tools
-brew "tlrc"              # Rust tldr client
-brew "hyperfine"         # CLI benchmarking
-brew "dust"              # Better du
-brew "bottom"            # Better top/htop
-brew "procs"             # Better ps
-brew "tokei"             # Code statistics
-brew "lazydocker"        # Docker TUI
-brew "httpie"            # Better curl for APIs
-brew "xh"                # Even faster httpie alternative
-brew "gemini-cli"        # Google Gemini CLI

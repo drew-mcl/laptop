@@ -20,6 +20,8 @@ ws zsh       # edit shell config
 ws brew      # edit brewfiles
 ws git       # edit git config
 ws nvim      # edit neovim config
+ws claude    # edit claude code config
+ws tips      # edit terminal tips
 ws edit      # fzf picker for any file
 ws sync      # commit + push changes
 ws stow      # re-symlink all dotfiles
@@ -33,7 +35,8 @@ run `ws help` for all commands.
 ## try it out
 
 ```bash
-fastfetch                # see your system at a glance
+clc                      # claude code in a fresh worktree of the current repo
+zc bardog                # jump to a repo and start clc there
 y                        # browse files in yazi, open one in nvim
 lazygit                  # full git workflow in your terminal
 btm                      # live system monitor
